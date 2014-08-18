@@ -7,8 +7,8 @@ Integration of Metrics with Spring Using XML and Annotations.
 Instalation
 ===========
 
-1.  git clone git@github.com:kailapiyush/Metrics-POC.git
-    or
-    Download as Zip
+1.  git clone git@github.com:kailapiyush/Metrics-POC.git  
+    or  
+    Download as Zip  
 
-2.  then import existing Maven Project
+2.  import existing Maven Project...
