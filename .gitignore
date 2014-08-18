@@ -1,0 +1,10 @@
+target
+bin
+.checkstyle
+.classpath
+.project
+.settings
+git.properties
+*.log
+cache
+.metadata

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:metrics="http://www.ryantenney.com/schema/metrics"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.ryantenney.com/schema/metrics
+    http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<!-- Registry should be defined in only one context XML file -->
+	<!-- Remove Comment if you want to use annotations -->
+    <!-- <metrics:metric-registry id="metrics" />	 -->
+		
+	<!-- annotation-driven must be included in all context files -->
+	<!-- Remove Comment if you want to use annotations -->
+    <!-- <metrics:annotation-driven metric-registry="metrics" /> -->
+	
+</beans>
