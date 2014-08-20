@@ -13,6 +13,9 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<version.metrics>3.0.2</version.metrics>
+		<hibernate.version>4.3.5.Final</hibernate.version>
+        <hibernate.validator.version>5.1.1.Final</hibernate.validator.version>
+        <hibernate.validator.annotation.version>5.1.1.Final</hibernate.validator.annotation.version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -109,6 +112,18 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		
+		<!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
 		
 		<!-- Metrics -->
 		<dependency>

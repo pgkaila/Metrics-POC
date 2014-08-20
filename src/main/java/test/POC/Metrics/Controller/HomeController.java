@@ -1,4 +1,4 @@
-package test.POC.Metrics;
+package test.POC.Metrics.Controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -32,9 +32,6 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	
-	@Autowired
-	User user;
-	
 	@Timed(name = "home view Timer", absolute=true)
 	@Metered(name = "home view Meter", absolute=true)
 	@Counted(name = "homeCount",monotonic=true)
@@ -52,7 +49,7 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("serverTime", formattedDate  + "    :    " + user.getUsername());
+		model.addAttribute("serverTime", formattedDate  + "    :    ");
 		
 		return "home";
 	}
