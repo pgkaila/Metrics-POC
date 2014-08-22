@@ -16,6 +16,7 @@
 		<hibernate.version>4.3.5.Final</hibernate.version>
         <hibernate.validator.version>5.1.1.Final</hibernate.validator.version>
         <hibernate.validator.annotation.version>5.1.1.Final</hibernate.validator.annotation.version>
+        <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -36,7 +37,18 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-				
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -96,11 +108,11 @@
 				
 		<!-- Servlet -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
@@ -124,6 +136,14 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+		
+		<!-- MYSQL -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.32</version>
+		</dependency>
+				
 		
 		<!-- Metrics -->
 		<dependency>
@@ -172,6 +192,13 @@
 		   <groupId>asm</groupId>
 		   <artifactId>asm-all</artifactId>
 		   <version>2.1</version>
+		</dependency>
+	
+		<!-- Graphite -->
+		<dependency>
+			<groupId>com.codahale.metrics</groupId>
+			<artifactId>metrics-graphite</artifactId>
+			<version>3.0.2</version>
 		</dependency>
 	
 		<!-- Test -->

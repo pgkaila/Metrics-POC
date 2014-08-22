@@ -18,31 +18,36 @@ public class UserController {
 	private UserService userService;
     
     @Autowired(required=true)
-    @Qualifier(value="userService")
     public void setUserService(UserService ps){
         this.userService = ps;
     }
      
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String listUsers(Model model) {
-        model.addAttribute("person", new User());
+        model.addAttribute("user", new User());
         model.addAttribute("listUsers", this.userService.listUsers());
-        return "person";
+        return "user";
+    }
+    
+  //For add and update user both
+    @RequestMapping(value= "/user/add", method = RequestMethod.GET)
+    public String addUser(){
+        return "adduser";
     }
      
-    //For add and update person both
-    @RequestMapping(value= "/person/add", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("person") User p){
+    //For add and update user both
+    @RequestMapping(value= "/user/add", method = RequestMethod.POST)
+    public String addUser(@ModelAttribute("user") User p){
          
         if(p.getId() == 0){
-            //new person, add it
+            //new user, add it
             this.userService.addUser(p);
         }else{
-            //existing person, call update
+            //existing user, call update
             this.userService.updateUser(p);
         }
          
-        return "redirect:/persons";
+        return "redirect:/users";
          
     }
      
@@ -50,13 +55,13 @@ public class UserController {
     public String removeUser(@PathVariable("id") int id){
          
         this.userService.removeUser(id);
-        return "redirect:/persons";
+        return "redirect:/users";
     }
   
     @RequestMapping("/edit/{id}")
     public String editUser(@PathVariable("id") int id, Model model){
-        model.addAttribute("person", this.userService.getUserById(id));
+        model.addAttribute("user", this.userService.getUserById(id));
         model.addAttribute("listUsers", this.userService.listUsers());
-        return "person";
+        return "user";
     }
 }
