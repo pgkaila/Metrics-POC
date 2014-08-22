@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:metrics="http://www.ryantenney.com/schema/metrics"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.ryantenney.com/schema/metrics http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<beans:bean id="dataSource" 
+         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<beans:property name="url" value="jdbc:mysql://localhost:3306/test23" />
+		<beans:property name="username" value="root" />
+		<beans:property name="password" value="toor" />
+	</beans:bean>
+	
+	<!-- Hibernate session factory -->
+	<beans:bean id="sessionFactory" 
+	class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	 
+	    <beans:property name="dataSource">
+	      <beans:ref bean="dataSource"/>
+	    </beans:property>
+	 
+	    <beans:property name="hibernateProperties">
+	       <beans:props>
+	         <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
+	         <beans:prop key="hibernate.show_sql">true</beans:prop>
+	         <beans:prop key="hibernate.hbm2ddl.auto">create</beans:prop>
+	       </beans:props>
+	    </beans:property>
+	 
+	    <beans:property name="packagesToScan">
+		<beans:list>
+			<beans:value>test.POC.Metrics</beans:value>
+		</beans:list>
+	    </beans:property>
+	 
+	</beans:bean>
+	
+	<beans:bean id="userDAO" class="test.POC.Metrics.DAO.UserDAOImpl">
+        <beans:property name="sessionFactory" ref="sessionFactory" />
+    </beans:bean>
+    <beans:bean id="userService" class="test.POC.Metrics.Services.UserServiceImpl">
+        <beans:property name="userDAO" ref="userDAO"></beans:property>
+    </beans:bean>
+     
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+     
+    <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <beans:property name="sessionFactory" ref="sessionFactory" />
+    </beans:bean>
+	
+	<context:component-scan base-package="test.POC.Metrics" />
+	
+    <!-- annotation-driven must be included in all context files -->
+    <!-- Remove Comment if you want to use annotations -->
+    <!-- <metrics:annotation-driven metric-registry="metrics" /> -->
+
+    <!-- (Optional) Registry should be defined in only one context XML file -->
+    <!-- Remove Comment if you want to use annotations -->
+    <!-- <metrics:reporter type="console" metric-registry="metrics" period="1m" /> -->
+
+    <!-- (Optional) The metrics in this example require the metrics-jvm jar-->
+    <!-- Remove Comment if you want to use annotations -->
+	<!-- <metrics:register metric-registry="metrics">
+	    <beans:bean metrics:name="jvm.gc" class="com.codahale.metrics.jvm.GarbageCollectorMetricSet" />
+	    <beans:bean metrics:name="jvm.memory" class="com.codahale.metrics.jvm.MemoryUsageGaugeSet" />
+	    <beans:bean metrics:name="jvm.thread-states" class="com.codahale.metrics.jvm.ThreadStatesGaugeSet" />
+	    <beans:bean metrics:name="jvm.fd.usage" class="com.codahale.metrics.jvm.FileDescriptorRatioGauge" />
+    </metrics:register> -->
+
+    <!-- Beans and other Spring config -->
+	
+</beans:beans>

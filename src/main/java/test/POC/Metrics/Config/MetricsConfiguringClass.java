@@ -22,7 +22,7 @@ public class MetricsConfiguringClass extends MetricsConfigurerAdapter {
         ConsoleReporter
             .forRegistry(metricRegistry)
             .build()
-            .start(15, TimeUnit.MINUTES);
+            .start(1, TimeUnit.MINUTES);
         
         
         final Graphite graphite = new Graphite(new InetSocketAddress("0.0.0.0", 2003));
@@ -32,6 +32,6 @@ public class MetricsConfiguringClass extends MetricsConfigurerAdapter {
                                                           .convertDurationsTo(TimeUnit.MILLISECONDS)
                                                           .filter(MetricFilter.ALL)
                                                           .build(graphite);
-        reporter.start(15, TimeUnit.MINUTES);
+        reporter.start(1, TimeUnit.MINUTES);
     }
 }

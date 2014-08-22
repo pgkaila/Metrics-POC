@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+<!-- Hibernate session factory -->
+<beans:bean id="sessionFactory" 
+class="org.springframework.orm.hibernate4.annotation.AnnotationSessionFactoryBean">
+ 
+    <property name="dataSource">
+      <ref bean="dataSource"/>
+    </property>
+ 
+    <property name="hibernateProperties">
+       <props>
+         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+         <prop key="hibernate.show_sql">true</prop>
+       </props>
+    </property>
+ 
+    <property name="annotatedClasses">
+	<list>
+		<value>test.POC.Metrics.Domain.User</value>
+	</list>
+    </property>
+ 
+    </beans:bean>
+</beans:beans>

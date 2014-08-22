@@ -5,8 +5,10 @@ import java.util.Properties;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
+
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.jdbi.InstrumentedTimingCollector;
 
 import test.POC.Metrics.Controller.HomeController;
 import test.POC.Metrics.Domain.User;
@@ -45,6 +50,9 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
 
     private static final Logger logger = LoggerFactory.getLogger(WebAppConfig.class);
     
+    @Autowired
+    MetricRegistry registry;
+    
     @Bean
     public DataSource dataSource() {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -52,8 +60,11 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
             dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
             dataSource.setUsername(env.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
             dataSource.setPassword(env.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
+            final DBI dbi = new DBI(dataSource);
+            dbi.setTimingCollector(new InstrumentedTimingCollector(registry));
             return dataSource;
     }
+    
     
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
