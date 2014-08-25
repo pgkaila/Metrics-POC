@@ -1,5 +1,7 @@
 package test.POC.Metrics.Config;
 
+import java.util.HashMap;
+
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -23,9 +25,23 @@ public class AppInitializer implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
         
-        FilterRegistration.Dynamic metricsHttpFilter = servletContext.addFilter("metricsHttpFilter",
-        		com.codahale.metrics.servlet.InstrumentedFilter.class);
-        metricsHttpFilter.addMappingForUrlPatterns(null, true, "/*");
+        ServletRegistration.Dynamic MetricsServlet = servletContext.addServlet("MetricsServlet", com.yammer.metrics.reporting.MetricsServlet.class);
+        MetricsServlet.setInitParameter("show-jvm-metrics", "false");
+        MetricsServlet.addMapping("/jdbcmetrics");
+        
+//        FilterRegistration.Dynamic metricsHttpFilter = servletContext.addFilter("metricsHttpFilter",
+//        		com.codahale.metrics.servlet.InstrumentedFilter.class);
+//        metricsHttpFilter.addMappingForUrlPatterns(null, true, "/*");
+        
+        FilterRegistration.Dynamic JDBCMetricsFilter = servletContext.addFilter("JDBCMetricsFilter",
+        		com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter.class);
+        JDBCMetricsFilter.setInitParameters(new HashMap<String, String>(){{
+            put("use-headers","true");
+            put("request-header-name","jdbcmetrics");
+        }});
+        JDBCMetricsFilter.addMappingForUrlPatterns(null, true, "/*");
+        
+        
     }
 
     private AnnotationConfigWebApplicationContext getContext() {

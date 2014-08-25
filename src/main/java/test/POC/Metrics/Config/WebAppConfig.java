@@ -3,9 +3,7 @@ package test.POC.Metrics.Config;
 import java.util.Properties;
 
 import javax.annotation.Resource;
-import javax.sql.DataSource;
 
-import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +22,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.jdbi.InstrumentedTimingCollector;
-
-import test.POC.Metrics.Controller.HomeController;
 import test.POC.Metrics.Domain.User;
+
+import com.codahale.metrics.MetricRegistry;
+import com.soulgalore.jdbcmetrics.DataSource;
 
 @Configuration //Specifies the class as configuration
 @ComponentScan(basePackages = { "test.POC.Metrics" }) //Specifies which package to scan
@@ -50,9 +47,6 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
 
     private static final Logger logger = LoggerFactory.getLogger(WebAppConfig.class);
     
-    @Autowired
-    MetricRegistry registry;
-    
     @Bean
     public DataSource dataSource() {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -60,9 +54,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
             dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
             dataSource.setUsername(env.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
             dataSource.setPassword(env.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
-            final DBI dbi = new DBI(dataSource);
-            dbi.setTimingCollector(new InstrumentedTimingCollector(registry));
-            return dataSource;
+            com.soulgalore.jdbcmetrics.DataSource dataSource1 = new com.soulgalore.jdbcmetrics.DataSource(dataSource);
+            return dataSource1;
     }
     
     
