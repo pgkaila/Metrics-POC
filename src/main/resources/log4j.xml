@@ -31,6 +31,10 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+    <logger name="com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter">
+        <level value="debug" />
+    </logger>
+
 
 	<!-- Root Logger -->
 	<root>

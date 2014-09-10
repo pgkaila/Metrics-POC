@@ -25,7 +25,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import test.POC.Metrics.Domain.User;
 
 import com.codahale.metrics.MetricRegistry;
-import com.soulgalore.jdbcmetrics.DataSource;
+//import com.soulgalore.jdbcmetrics.DataSource;
 
 @Configuration //Specifies the class as configuration
 @ComponentScan(basePackages = { "test.POC.Metrics" }) //Specifies which package to scan
@@ -48,14 +48,15 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
     private static final Logger logger = LoggerFactory.getLogger(WebAppConfig.class);
     
     @Bean
-    public DataSource dataSource() {
+    public javax.sql.DataSource dataSource() {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
             dataSource.setDriverClassName(env.getRequiredProperty(PROPERTY_NAME_DATABASE_DRIVER));
             dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
             dataSource.setUsername(env.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
             dataSource.setPassword(env.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
-            com.soulgalore.jdbcmetrics.DataSource dataSource1 = new com.soulgalore.jdbcmetrics.DataSource(dataSource);
-            return dataSource1;
+//            com.soulgalore.jdbcmetrics.DataSource dataSource1 = new com.soulgalore.jdbcmetrics.DataSource(dataSource);
+//            return dataSource1;
+            return dataSource;
     }
     
     

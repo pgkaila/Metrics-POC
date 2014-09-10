@@ -25,9 +25,9 @@ public class AppInitializer implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
         
-        ServletRegistration.Dynamic MetricsServlet = servletContext.addServlet("MetricsServlet", com.yammer.metrics.reporting.MetricsServlet.class);
-        MetricsServlet.setInitParameter("show-jvm-metrics", "false");
-        MetricsServlet.addMapping("/jdbcmetrics");
+//        ServletRegistration.Dynamic MetricsServlet = servletContext.addServlet("MetricsServlet", com.yammer.metrics.reporting.MetricsServlet.class);
+//        MetricsServlet.setInitParameter("show-jvm-metrics", "false");
+//        MetricsServlet.addMapping("/jdbcmetrics");
         
 //        FilterRegistration.Dynamic metricsHttpFilter = servletContext.addFilter("metricsHttpFilter",
 //        		com.codahale.metrics.servlet.InstrumentedFilter.class);

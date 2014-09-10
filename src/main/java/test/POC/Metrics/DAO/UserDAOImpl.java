@@ -23,14 +23,14 @@ public class UserDAOImpl implements UserDAO {
     public void addUser(User p) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(p);
-        logger.info("User saved successfully, User Details="+p);
+//        logger.info("User saved successfully, User Details="+p);
     }
  
     @Override
     public void updateUser(User p) {
         Session session = this.sessionFactory.getCurrentSession();
         session.update(p);
-        logger.info("User updated successfully, User Details="+p);
+//        logger.info("User updated successfully, User Details="+p);
     }
  
     @Override
@@ -38,7 +38,7 @@ public class UserDAOImpl implements UserDAO {
         Session session = this.sessionFactory.getCurrentSession();
         List<User> UsersList = session.createQuery("from User").list();
         for(User p : UsersList){
-            logger.info("User List::"+p);
+//            logger.info("User List::"+p);
         }
         return UsersList;
     }
@@ -47,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
     public User getUserById(int id) {
         Session session = this.sessionFactory.getCurrentSession();      
         User p = (User) session.load(User.class, new Integer(id));
-        logger.info("User loaded successfully, User details="+p);
+//        logger.info("User loaded successfully, User details="+p);
         return p;
     }
  
@@ -58,6 +58,6 @@ public class UserDAOImpl implements UserDAO {
         if(null != p){
             session.delete(p);
         }
-        logger.info("User deleted successfully, User details="+p);
+//        logger.info("User deleted successfully, User details="+p);
     }
 }
