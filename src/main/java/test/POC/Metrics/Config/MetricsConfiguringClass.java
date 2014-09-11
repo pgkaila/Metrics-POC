@@ -21,12 +21,9 @@ import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
 
 @Configuration
 @EnableMetrics
-public class MetricsConfiguringClass extends MetricsConfigurerAdapter implements MetricsConfigurer{
+public class MetricsConfiguringClass extends MetricsConfigurerAdapter{
 
     private static final Logger logger = LoggerFactory.getLogger(MetricsConfiguringClass.class);
-
-
-//    JDBCMetrics jdbcMetrics = JDBCMetrics.getInstance();
 
 
     @Override
@@ -39,7 +36,7 @@ public class MetricsConfiguringClass extends MetricsConfigurerAdapter implements
 
         logger.info("registry name : " + registry.getNames());
 
-//        logger.info("jdbcregistry name : " + jdbcMetrics.getRegistry().getNames());
+        logger.info("jdbcregistry name : " + JDBCMetrics.getInstance().getRegistry().getNames());
 
 //        ConsoleReporter
 //                .forRegistry(jdbcMetrics.getRegistry())

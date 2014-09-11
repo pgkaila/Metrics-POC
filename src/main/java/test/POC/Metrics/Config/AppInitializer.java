@@ -32,16 +32,23 @@ public class AppInitializer implements WebApplicationInitializer {
 //        FilterRegistration.Dynamic metricsHttpFilter = servletContext.addFilter("metricsHttpFilter",
 //        		com.codahale.metrics.servlet.InstrumentedFilter.class);
 //        metricsHttpFilter.addMappingForUrlPatterns(null, true, "/*");
-        
-        FilterRegistration.Dynamic JDBCMetricsFilter = servletContext.addFilter("JDBCMetricsFilter",
-        		com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter.class);
-        JDBCMetricsFilter.setInitParameters(new HashMap<String, String>(){{
-            put("use-headers","true");
-            put("request-header-name","jdbcmetrics");
-        }});
-        JDBCMetricsFilter.addMappingForUrlPatterns(null, true, "/*");
-        
-        
+
+        FilterRegistration.Dynamic instrumentedFilter = servletContext.addFilter("instrumentedFilter",
+                com.codahale.metrics.servlet.InstrumentedFilter.class);
+        instrumentedFilter.addMappingForUrlPatterns(null, true, "/*");
+
+//        FilterRegistration.Dynamic JDBCMetricsFilter = servletContext.addFilter("JDBCMetricsFilter",
+//        		com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter.class);
+//        JDBCMetricsFilter.setInitParameters(new HashMap<String, String>(){{
+//            put("use-headers","true");
+//            put("request-header-name","jdbcmetrics");
+//        }});
+//        JDBCMetricsFilter.addMappingForUrlPatterns(null, true, "/*");
+
+        FilterRegistration.Dynamic CustomJDBCMetricsFilter = servletContext.addFilter("customJDBCMetricsFilter",
+                test.POC.Metrics.Config.CustomJDBCMetricsFilter.class);
+        CustomJDBCMetricsFilter.addMappingForUrlPatterns(null, true, "/*");
+
     }
 
     private AnnotationConfigWebApplicationContext getContext() {
